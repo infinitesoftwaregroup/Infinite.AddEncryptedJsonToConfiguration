@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>Configuring your .NET Core with encrypted JSON files has never been so easy
+Use encrypted JSON file with this configuration provider for .NET Core's Microsoft.Extensions.Configuration. The JSON files use AEAD AES-256-GCM encryption.</Description>
+    <Copyright>Copyright (c) 2022 Infinite Software</Copyright>
+    <Authors>Infinite Software</Authors>
+    <Company>Infinite Software</Company>
+    <RepositoryUrl>https://github.com/infinitesoftwaregroup/Infinite.AddEncryptedJsonToConfiguration</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/infinitesoftwaregroup/Infinite.AddEncryptedJsonToConfiguration</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.2</Version>
+    <LangVersion>default</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.31" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.31" />
+    <None Include="README.md" Pack="True" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
