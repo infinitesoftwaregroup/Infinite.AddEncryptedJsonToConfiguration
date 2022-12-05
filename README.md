@@ -10,16 +10,16 @@ Projects often contains sensitive information like database connection strings, 
 
 ## Installation
 
-You can install the package via the NuGet Package Manager by searching for `Infinite.EncryptedJsonConfiguration`. You can also install the package via PowerShell using the following command:
+You can install the package via the NuGet Package Manager by searching for `Infinite.AddEncryptedJsonToConfiguration`. You can also install the package via PowerShell using the following command:
 
 ```ps
-Install-Package Infinite.EncryptedJsonConfiguration
+Install-Package Infinite.AddEncryptedJsonToConfiguration
 ```
 
 or via the dotnet CLI:
 
 ```ps
-dotnet add package Infinite.EncryptedJsonConfiguration
+dotnet add package Infinite.AddEncryptedJsonToConfiguration
 ```
 
 ## Getting started
@@ -27,7 +27,7 @@ dotnet add package Infinite.EncryptedJsonConfiguration
 Add the following to your `Program.cs` file:
 
 ```csharp
-using Infinite.EncryptedJsonConfiguration;
+using Infinite.AddEncryptedJsonToConfiguration;
 ```
 
 To decrypt a configuration file you will need a base64 formatted encryption key:
@@ -159,4 +159,4 @@ The `AesEncryptionHelpers` static class also include methods these methods to he
 
 ## Acknowledgements
 
-Infinite.EncryptedJsonConfiguration uses some of the encryption code from the [CryptHash.NET](https://github.com/alecgn/crypthash-net/) (MIT license) library for it's AES-256-GCM operations.
+Infinite.AddEncryptedJsonToConfiguration uses some of the encryption code from the [CryptHash.NET](https://github.com/alecgn/crypthash-net/) (MIT license) library for it's AES-256-GCM operations.
