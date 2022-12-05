@@ -1,4 +1,4 @@
-![](.github/images/banner.png)
+![](https://raw.githubusercontent.com/infinitesoftwaregroup/Infinite.AddEncryptedJsonToConfiguration/main/.github/images/banner.png)
 
 ### Configuring your .NET Core with encrypted JSON files has never been so easy
 
@@ -9,7 +9,7 @@ Use encrypted JSON file with this configuration provider for .NET Core's `Micros
 Projects often contains sensitive information like database connection strings, API keys or usernames and passwords for external services. This information should never be committed to source control and should be handled in a secure way. Key vaults like those provided by Azure and AWS aren't always available for projects that can't be connected to the internet.
 
 ## Installation
-~~~~
+
 You can install the package via the NuGet Package Manager by searching for `Infinite.EncryptedJsonConfiguration`. You can also install the package via PowerShell using the following command:
 
 ```ps
