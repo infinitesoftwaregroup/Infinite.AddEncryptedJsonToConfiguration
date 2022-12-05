@@ -111,7 +111,7 @@ Before you begin you need to install the Infinite.Cipher command line tool. See 
 Start by creating a new encryption key.
 
 ```bash
-$ Cipher generate
+$ CipherTool generate
 ```
 
 Make sure you write down the encryption key in a safe location, like a password manager (1Password, LastPass, etc.). Never commit the encryption key into source code.
@@ -119,13 +119,13 @@ Make sure you write down the encryption key in a safe location, like a password 
 Create a JSON file in your favorite file editor. When you are ready to encrypt the JSON file, use the following command.
 
 ```bash
-$ Cipher encrypt -k {key} {filename}
+$ CipherTool encrypt -k {key} {filename}
 ```
 
 If you need to decrypt the file to make changes you can use the following command:
 
 ```bash
-$ Cipher decrypt -k {key} {filename}
+$ CipherTool decrypt -k {key} {filename}
 ```
 
 The file's contents is replaced with the encrypted or decrypted configuration when the `encrypt` or `decrypt` command is used. Add the `-c` option to output to your console instead of writing to the file system.
