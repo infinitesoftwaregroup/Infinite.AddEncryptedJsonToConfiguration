@@ -100,18 +100,18 @@ public void GetRecordsFromDatabase()
 
 ## Creating an encrypted configuration file
 
-The easiest way to create encrypted configuration files and encryption keys is to use the [Infinite](https://github.com/infinitesoftwaregroup/Infinite.Cipher) command line tool. Please check the tool's GitHub page for more information.
+The easiest way to create encrypted configuration files and encryption keys is to use the [Infinite.Cipher](https://github.com/infinitesoftwaregroup/Infinite.Cipher) command line tool. Please check the tool's GitHub page for more information.
 
 You can still encrypt the configuration files from your own code if you prefer that.
 
-### Using Infinite
+### Using Infinite.Cipher
 
-Before you begin you need to install the Infinite command line tool. See the [Infinite project page](https://github.com/infinitesoftwaregroup/Infinite.Cipher).
+Before you begin you need to install the Infinite.Cipher command line tool. See the [Infinite.Cipher project page](https://github.com/infinitesoftwaregroup/Infinite.Cipher).
 
 Start by creating a new encryption key.
 
 ```bash
-$ Infinite generate
+$ Cipher generate
 ```
 
 Make sure you write down the encryption key in a safe location, like a password manager (1Password, LastPass, etc.). Never commit the encryption key into source code.
@@ -119,13 +119,13 @@ Make sure you write down the encryption key in a safe location, like a password 
 Create a JSON file in your favorite file editor. When you are ready to encrypt the JSON file, use the following command.
 
 ```bash
-$ Infinite encrypt -k {key} {filename}
+$ Cipher encrypt -k {key} {filename}
 ```
 
 If you need to decrypt the file to make changes you can use the following command:
 
 ```bash
-$ Infinite decrypt -k {key} {filename}
+$ Cipher decrypt -k {key} {filename}
 ```
 
 The file's contents is replaced with the encrypted or decrypted configuration when the `encrypt` or `decrypt` command is used. Add the `-c` option to output to your console instead of writing to the file system.

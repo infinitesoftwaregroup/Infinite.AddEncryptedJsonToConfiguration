@@ -11,7 +11,7 @@ Use encrypted JSON file with this configuration provider for .NET Core's Microso
     <PackageProjectUrl>https://github.com/infinitesoftwaregroup/Infinite.AddEncryptedJsonToConfiguration</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
