@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using Infinite.AddEncryptedJsonToConfiguration.libs.CryptHash.Net;
 using Microsoft.Extensions.Configuration;
 
 namespace Infinite.AddEncryptedJsonToConfiguration
@@ -28,10 +27,9 @@ namespace Infinite.AddEncryptedJsonToConfiguration
             try
             {
                 var encryptedSettings = stream.ToBytes();
-                var aes = new AEAD_AES_256_GCM();
-                var settings = aes.DecryptString(encryptedSettings, source.Key);
+                var settings = AesEncryptionHelpers.DecryptStringFromBytes_Aes(encryptedSettings, source.Key);
 
-                Data = EncryptedJsonConfigurationFileParser.Parse(new MemoryStream(settings));
+                Data = EncryptedJsonConfigurationFileParser.Parse(settings);
             }
             catch (JsonException e)
             {

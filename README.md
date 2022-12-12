@@ -2,7 +2,7 @@
 
 ### Configuring your .NET Core with encrypted JSON files has never been so easy
 
-Use encrypted JSON file with this configuration provider for .NET Core's `Microsoft.Extensions.Configuration`. The JSON files use AEAD AES-256-GCM encryption.
+Use encrypted JSON file with this configuration provider for .NET Core's `Microsoft.Extensions.Configuration`. The JSON files use AEAD AES encryption.
 
 ### Motivation
 
@@ -156,7 +156,3 @@ The `AesEncryptionHelpers` static class also include methods these methods to he
 * `string Encrypt<T>(T settings, byte[] key)`
 * `string Decrypt(string cipher, string key)`
 * `string Decrypt(byte[] cipher, byte[] key)`
-
-## Acknowledgements
-
-Infinite.AddEncryptedJsonToConfiguration uses some of the encryption code from the [CryptHash.NET](https://github.com/alecgn/crypthash-net/) (MIT license) library for it's AES-256-GCM operations.

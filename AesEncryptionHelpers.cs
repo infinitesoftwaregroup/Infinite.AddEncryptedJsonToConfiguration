@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.Text.Json;
-using Infinite.AddEncryptedJsonToConfiguration.libs.CryptHash.Net;
-
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 namespace Infinite.AddEncryptedJsonToConfiguration
 {
     /// <summary>
@@ -10,133 +9,36 @@ namespace Infinite.AddEncryptedJsonToConfiguration
     /// </summary>
     public static class AesEncryptionHelpers
     {
-        /// <summary>
-        /// Generates a new 256 bit key.
-        /// </summary>
-        /// <returns>The encryption key used to der.</returns>
-        public static byte[] GenerateKey()
+        public static CryptoStream DecryptStringFromBytes_Aes(byte[] cipherText, byte[] key)
         {
-            return CommonMethods.Generate256BitKey();
-        }
-
-        /// <summary>
-        /// Generates a new 256 bit key.
-        /// </summary>
-        /// <returns>The encryption key encoded as a base64 string.</returns>
-        public static string GenerateBase64EncodedKey()
-        {
-            var key = CommonMethods.Generate256BitKey();
-            return Convert.ToBase64String(key);
-        }
-
-        /// <summary>
-        /// Encrypts an input string using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="text">The plain string input to encrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The base64 encoded output string encrypted with AES.</returns>
-        public static string Encrypt(string text, string key)
-        {
-            if (string.IsNullOrEmpty(text))
-                throw new ArgumentNullException(nameof(text));
-            
-            if (string.IsNullOrEmpty(key))
+            // Check arguments.
+            if (cipherText == null || cipherText.Length <= 0)
+                throw new ArgumentNullException(nameof(cipherText));
+            if (key == null || key.Length <= 0)
                 throw new ArgumentNullException(nameof(key));
 
-            var aes = new AEAD_AES_256_GCM();
-            return Convert.ToBase64String(aes.EncryptString(text, key));
-        }
+            // Declare the string used to hold
+            // the decrypted text.
 
-        /// <summary>
-        /// Encrypts an input byte array using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="text">The input byte array of the string to encrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The base64 encoded output string encrypted with AES.</returns>
-        public static string Encrypt(byte[] text, byte[] key)
-        {
-            if (text == null)
-                throw new ArgumentNullException(nameof(text));
+            // Create an Aes object
+            // with the specified key and IV.
+            using var aesAlg = Aes.Create();
+            aesAlg.Key = key;
+            aesAlg.IV = key[8..12].Concat(key[4..8]).Concat(key[12..16]).Concat(key[0..4]).ToArray();
 
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
 
-            var aes = new AEAD_AES_256_GCM();
-            return Convert.ToBase64String(aes.EncryptString(text, key));
-        }
+            // Create a decryptor to perform the stream transform.
+            var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-        /// <summary>
-        /// Serializes and encrypts a strongly typed settings object class using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="settings">The input strongly typed settings object to encrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The base64 encoded output string encrypted with AES.</returns>
-        public static string Encrypt<TSettings>(TSettings settings, string key)
-            where TSettings : class, new()
-        {
-            if (settings == null)
-                throw new ArgumentNullException(nameof(settings));
+            // Create the streams used for decryption.
+            using var msDecrypt = new MemoryStream(cipherText);
+            var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            // using var srDecrypt = new StreamReader(csDecrypt);
+            // // Read the decrypted bytes from the decrypting stream
+            // // and place them in a string.
+            // var plaintext = srDecrypt.ReadToEnd();
 
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var json = JsonSerializer.Serialize(settings);
-            return Encrypt(json, key);
-        }
-
-        /// <summary>
-        /// Serializes and encrypts a strongly typed settings object class using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="settings">The input strongly typed settings object to encrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The base64 encoded output string encrypted with AES.</returns>
-        public static string Encrypt<TSettings>(TSettings settings, byte[] key)
-            where TSettings : class, new()
-        {
-            if (settings == null)
-                throw new ArgumentNullException(nameof(settings));
-
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var json = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(settings));
-            return Encrypt(json, key);
-        }
-
-        /// <summary>
-        /// Decrypts an input string using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="cipher">The base64 encoded input cipher to decrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The decrypted output string.</returns>
-        public static string Decrypt(string cipher, string key)
-        {
-            if (string.IsNullOrEmpty(cipher))
-                throw new ArgumentNullException(nameof(cipher));
-
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
-            
-            var aes = new AEAD_AES_256_GCM();
-            return Encoding.UTF8.GetString(aes.DecryptString(cipher, key));
-        }
-
-        /// <summary>
-        /// Encrypts an input byte array using AES with a 256 bits key in GCM authenticated mode.
-        /// </summary>
-        /// <param name="cipher">The byte array of the cipher to decrypt.</param>
-        /// <param name="key">The encryption key being used.</param>
-        /// <returns>The decrypted output string.</returns>
-        public static string Decrypt(byte[] cipher, byte[] key)
-        {
-            if (cipher == null)
-                throw new ArgumentNullException(nameof(cipher));
-
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            var aes = new AEAD_AES_256_GCM();
-            return Encoding.UTF8.GetString(aes.DecryptString(cipher, key));
+            return csDecrypt;
         }
     }
 }
