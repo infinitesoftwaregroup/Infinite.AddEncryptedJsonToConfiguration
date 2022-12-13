@@ -29,7 +29,7 @@ namespace Infinite.AddEncryptedJsonToConfiguration
                 var encryptedSettings = stream.ToBytes();
                 var settings = AesEncryptionHelpers.DecryptStringFromBytes_Aes(encryptedSettings, source.Key);
 
-                Data = EncryptedJsonConfigurationFileParser.Parse(settings);
+                Data = EncryptedJsonConfigurationFileParser.Parse(new MemoryStream(settings));
             }
             catch (JsonException e)
             {
