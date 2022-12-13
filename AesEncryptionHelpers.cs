@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
+
 namespace Infinite.AddEncryptedJsonToConfiguration
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace Infinite.AddEncryptedJsonToConfiguration
     /// </summary>
     public static class AesEncryptionHelpers
     {
-        public static CryptoStream DecryptStringFromBytes_Aes(byte[] cipherText, byte[] key)
+        public static byte[] DecryptStringFromBytes_Aes(byte[] cipherText, byte[] key)
         {
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
@@ -32,13 +34,13 @@ namespace Infinite.AddEncryptedJsonToConfiguration
 
             // Create the streams used for decryption.
             using var msDecrypt = new MemoryStream(cipherText);
-            var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-            // using var srDecrypt = new StreamReader(csDecrypt);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            using var srDecrypt = new StreamReader(csDecrypt);
             // // Read the decrypted bytes from the decrypting stream
             // // and place them in a string.
-            // var plaintext = srDecrypt.ReadToEnd();
-
-            return csDecrypt;
+            var plaintext = srDecrypt.ReadToEnd();
+            var result = Encoding.ASCII.GetBytes(plaintext);  
+            return result;
         }
     }
 }

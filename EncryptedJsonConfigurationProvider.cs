@@ -27,8 +27,8 @@ namespace Infinite.AddEncryptedJsonToConfiguration
             {
                 var text = Convert.FromBase64String(File.ReadAllText(source.Path));
                 var settings = AesEncryptionHelpers.DecryptStringFromBytes_Aes(text, source.Key);
-var
-                Data = EncryptedJsonConfigurationFileParser.Parse(settings);
+                
+                Data = EncryptedJsonConfigurationFileParser.Parse(new MemoryStream(settings));
             }
             catch (JsonException e)
             {
@@ -49,7 +49,7 @@ var
                 var encryptedSettings = stream.ToBytes();
                 var settings = AesEncryptionHelpers.DecryptStringFromBytes_Aes(encryptedSettings, source.Key);
                 
-                Data = EncryptedJsonConfigurationFileParser.Parse(settings);
+                Data = EncryptedJsonConfigurationFileParser.Parse(new MemoryStream(settings));
             }
             catch (JsonException e)
             {

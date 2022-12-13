@@ -11,11 +11,12 @@ Use encrypted JSON file with this configuration provider for .NET Core's Microso
     <PackageProjectUrl>https://github.com/infinitesoftwaregroup/Infinite.AddEncryptedJsonToConfiguration</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>6.0.0</Version>
+    <Version>6.0.1</Version>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>- upgrade to .net 6
-- use microsoft package instead of third party </PackageReleaseNotes>
+- use microsoft package instead of third party
+- Fix cannot access a closed Stream</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
